@@ -41,7 +41,10 @@ export function ItemTracker(props: ItemProps) {
         onSubmit={(e) => {
           e.preventDefault();
           logConsumption.mutate(
-            itemConsumtionSchema.parse({ item: item, amount }),
+            itemConsumtionSchema.parse({
+              item: `${item} ${props.verb ?? ""}`.trim(),
+              amount,
+            }),
           );
         }}
         className="flex flex-col gap-2"
