@@ -11,9 +11,9 @@ import {
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 
-export const foodSchema = pgSchema("food");
+export const itemSchema = pgSchema("item_consumption");
 
-export const posts = foodSchema.table(
+export const posts = itemSchema.table(
   "posts",
   {
     id: serial("id").primaryKey(),
@@ -28,7 +28,7 @@ export const posts = foodSchema.table(
   }),
 );
 
-export const foodConsumption = foodSchema.table("food_consumption", {
+export const itemConsumption = itemSchema.table("item_consumption", {
   id: serial("id").primaryKey(),
   item: text("item"),
   amount: real("amount"),

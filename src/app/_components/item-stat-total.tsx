@@ -1,11 +1,11 @@
 "use client";
 
 import { api } from "~/trpc/react";
-import type { FoodProps } from "./food-panel";
+import type { ItemProps } from "./item-panel";
 
-export function FoodConsumptionPanel(props: FoodProps) {
-  const { item, unit } = props;
-  const consumptionQuery = api.food.getYtd.useQuery(
+export function ItemConsumptionPanel(props: ItemProps) {
+  const { item, unit, verb } = props;
+  const consumptionQuery = api.item.getYtd.useQuery(
     { item },
     {
       refetchOnMount: true,
@@ -15,7 +15,7 @@ export function FoodConsumptionPanel(props: FoodProps) {
   );
   return (
     <p className="text-2xl text-white">
-      You have consumed{" "}
+      You have {verb ?? "used"}{" "}
       {consumptionQuery.data ? `${consumptionQuery.data}${unit}` : "quite some"}{" "}
       {item} so far this year.
     </p>

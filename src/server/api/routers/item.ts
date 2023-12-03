@@ -2,15 +2,15 @@ import { and, eq, gte, sum } from "drizzle-orm";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
-import { foodConsumption } from "~/server/db/schema";
-import { foodConsumtionSchema } from "~/types";
+import { itemConsumption } from "~/server/db/schema";
+import { itemConsumtionSchema } from "~/types";
 
-export const foodRouter = createTRPCRouter({
+export const itemRouter = createTRPCRouter({
   create: publicProcedure
-    .input(foodConsumtionSchema)
+    .input(itemConsumtionSchema)
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
-      await ctx.db.insert(foodConsumption).values({
+      await ctx.db.insert(itemConsumption).values({
         amount: input.amount,
         time: input.time,
         item: input.item,
@@ -26,13 +26,13 @@ export const foodRouter = createTRPCRouter({
 
       const query = await ctx.db
         .select({
-          sum: sum(foodConsumption.amount),
+          sum: sum(itemConsumption.amount),
         })
-        .from(foodConsumption)
+        .from(itemConsumption)
         .where(
           and(
-            eq(foodConsumption.item, input.item),
-            gte(foodConsumption.time, firstDayOfYear),
+            eq(itemConsumption.item, input.item),
+            gte(itemConsumption.time, firstDayOfYear),
           ),
         );
 

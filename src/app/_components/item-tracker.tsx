@@ -6,10 +6,10 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 import { z } from "zod";
-import { foodConsumtionSchema } from "~/types";
-import type { FoodProps } from "./food-panel";
+import { itemConsumtionSchema } from "~/types";
+import type { ItemProps } from "./item-panel";
 
-export function FoodTracker(props: FoodProps) {
+export function ItemTracker(props: ItemProps) {
   const router = useRouter();
 
   const { item: item, amountPresets = [], allowCustomAmounts = true } = props;
@@ -27,7 +27,7 @@ export function FoodTracker(props: FoodProps) {
   const [amount, setAmount] = useState(defaultPreset?.amount);
   const [selectedPreset, setSelectedPreset] = useState<number>(defaultPresetId);
 
-  const logConsumption = api.food.create.useMutation({
+  const logConsumption = api.item.create.useMutation({
     onSuccess: () => {
       router.refresh();
       setAmount(defaultPreset?.amount);
@@ -41,7 +41,7 @@ export function FoodTracker(props: FoodProps) {
         onSubmit={(e) => {
           e.preventDefault();
           logConsumption.mutate(
-            foodConsumtionSchema.parse({ item: item, amount }),
+            itemConsumtionSchema.parse({ item: item, amount }),
           );
         }}
         className="flex flex-col gap-2"
@@ -62,7 +62,7 @@ export function FoodTracker(props: FoodProps) {
                 className=""
               />
               <label htmlFor={`presetRadio${i}`}>
-                {preset.name ?? preset.amount}
+                {preset.name ?? preset.amount + (props.unit ?? "")}
               </label>
             </div>
           ))}
