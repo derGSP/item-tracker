@@ -1,12 +1,12 @@
 {
+  "id": "7825442a-eb5b-488b-bff5-29ccc0d7fa30",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
-  "id": "7c29d7f7-dca2-4af3-ba1c-1ca71d78d3c1",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
-    "posts": {
-      "name": "posts",
-      "schema": "food",
+    "item_consumption": {
+      "name": "item_consumption",
+      "schema": "item_consumption",
       "columns": {
         "id": {
           "name": "id",
@@ -14,42 +14,56 @@
           "primaryKey": true,
           "notNull": true
         },
-        "full_name": {
-          "name": "full_name",
-          "type": "varchar(256)",
+        "item": {
+          "name": "item",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount": {
+          "name": "amount",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "time": {
+          "name": "time",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": false
         },
         "created_at": {
           "name": "created_at",
-          "type": "timestamp",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true,
           "default": "CURRENT_TIMESTAMP"
-        },
-        "updatedAt": {
-          "name": "updatedAt",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {
-        "name_idx": {
-          "name": "name_idx",
+        "item_idx": {
+          "name": "item_idx",
           "columns": [
-            "full_name"
+            "item"
+          ],
+          "isUnique": false
+        },
+        "time_idx": {
+          "name": "time_idx",
+          "columns": [
+            "time"
           ],
           "isUnique": false
         }
       },
       "foreignKeys": {},
-      "compositePrimaryKeys": {}
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
     }
   },
   "enums": {},
   "schemas": {
-    "food": "food"
+    "item_consumption": "item_consumption"
   },
   "_meta": {
     "schemas": {},

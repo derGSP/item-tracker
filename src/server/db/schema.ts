@@ -13,27 +13,21 @@ import { sql } from "drizzle-orm";
 
 export const itemSchema = pgSchema("item_consumption");
 
-export const posts = itemSchema.table(
-  "posts",
+export const itemConsumption = itemSchema.table(
+  "item_consumption",
   {
     id: serial("id").primaryKey(),
-    name: text("full_name"),
+    item: text("item"),
+    amount: real("amount"),
+    time: timestamp("time", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt", { withTimezone: true }),
   },
-  (example) => ({
-    nameIndex: index("name_idx").on(example.name),
-  }),
+  (table) => {
+    return {
+      itemIdx: index("item_idx").on(table.item),
+      timeIdx: index("time_idx").on(table.time),
+    };
+  },
 );
-
-export const itemConsumption = itemSchema.table("item_consumption", {
-  id: serial("id").primaryKey(),
-  item: text("item"),
-  amount: real("amount"),
-  time: timestamp("time", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-});
