@@ -18,10 +18,10 @@ export const posts = foodSchema.table(
   {
     id: serial("id").primaryKey(),
     name: text("full_name"),
-    createdAt: timestamp("created_at")
+    createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt"),
+    updatedAt: timestamp("updatedAt", { withTimezone: true }),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
@@ -32,8 +32,8 @@ export const foodConsumption = foodSchema.table("food_consumption", {
   id: serial("id").primaryKey(),
   foodItem: text("item"),
   amount: real("amount"),
-  time: timestamp("time"),
-  createdAt: timestamp("created_at")
+  time: timestamp("time", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
 });

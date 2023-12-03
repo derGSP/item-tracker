@@ -15,6 +15,13 @@
       "when": 1701620316034,
       "tag": "0001_cultured_maggott",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1701629269903,
+      "tag": "0002_workable_scrambler",
+      "breakpoints": true
     }
   ]
 }
