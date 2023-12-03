@@ -18,7 +18,7 @@ export const itemRouter = createTRPCRouter({
     }),
 
   getYtd: publicProcedure
-    .input(z.object({ item: z.string() }))
+    .input(z.object({ item: z.string(), verb: z.string().optional() }))
     .query(async ({ ctx, input }) => {
       const firstDayOfYear = new Date();
       firstDayOfYear.setUTCMonth(0, 0);
@@ -31,7 +31,10 @@ export const itemRouter = createTRPCRouter({
         .from(itemConsumption)
         .where(
           and(
-            eq(itemConsumption.item, input.item),
+            eq(
+              itemConsumption.item,
+              `${input.item} ${input.verb ?? ""}`.trim(),
+            ),
             gte(itemConsumption.time, firstDayOfYear),
           ),
         );

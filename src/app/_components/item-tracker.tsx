@@ -12,7 +12,12 @@ import type { ItemProps } from "./item-panel";
 export function ItemTracker(props: ItemProps) {
   const router = useRouter();
 
-  const { item: item, amountPresets = [], allowCustomAmounts = true } = props;
+  const {
+    item: item,
+    amountPresets = [],
+    allowCustomAmounts = true,
+    verb,
+  } = props;
 
   const presets = amountPresets.map((preset) => {
     if (typeof preset === "number") {
@@ -42,7 +47,7 @@ export function ItemTracker(props: ItemProps) {
           e.preventDefault();
           logConsumption.mutate(
             itemConsumtionSchema.parse({
-              item: `${item} ${props.verb ?? ""}`.trim(),
+              item: `${item} ${verb ?? ""}`.trim(),
               amount,
             }),
           );
