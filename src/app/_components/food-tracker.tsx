@@ -6,6 +6,7 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 import { z } from "zod";
+import { foodConsumtionSchema } from "~/types";
 
 type Preset = {
   amount: number;
@@ -14,14 +15,14 @@ type Preset = {
 };
 
 export function TrackFood(props: {
-  foodName: string;
+  item: string;
   amountPresets?: (Preset | number)[];
   allowCustomAmounts?: boolean;
   unit?: string;
 }) {
   const router = useRouter();
 
-  const { foodName, amountPresets = [], allowCustomAmounts = true } = props;
+  const { item: item, amountPresets = [], allowCustomAmounts = true } = props;
 
   const presets = amountPresets.map((preset) => {
     if (typeof preset === "number") {
@@ -45,9 +46,9 @@ export function TrackFood(props: {
   });
 
   const consumptionQuery = api.food.getYtd.useQuery(
-    { foodName },
+    { item },
     {
-      refetchOnMount: false,
+      refetchOnMount: true,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
     },
@@ -60,7 +61,7 @@ export function TrackFood(props: {
         {consumptionQuery.data
           ? `${consumptionQuery.data}${props.unit}`
           : "quite some"}{" "}
-        {foodName} so far this year.
+        {item} so far this year.
       </p>
     );
   };
@@ -71,7 +72,9 @@ export function TrackFood(props: {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          logConsumption.mutate({ item: foodName, amount });
+          logConsumption.mutate(
+            foodConsumtionSchema.parse({ item: item, amount }),
+          );
         }}
         className="flex flex-col gap-2"
       >

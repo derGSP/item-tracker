@@ -37,7 +37,7 @@ export default async function Home() {
         </div>
 
         <TrackFood
-          foodName="Pasta"
+          item="Pasta"
           amountPresets={[{ amount: 500, isDefault: true }, 1000]}
           unit="g"
         />

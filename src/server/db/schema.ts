@@ -30,7 +30,7 @@ export const posts = foodSchema.table(
 
 export const foodConsumption = foodSchema.table("food_consumption", {
   id: serial("id").primaryKey(),
-  foodItem: text("item"),
+  item: text("item"),
   amount: real("amount"),
   time: timestamp("time", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true })
