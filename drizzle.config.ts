@@ -8,5 +8,6 @@ export default {
   dbCredentials: {
     connectionString: env.DATABASE_URL,
   },
-  tablesFilter: ["food-track_*"],
+  tablesFilter: ["food*"],
+  out: "./migrations",
 } satisfies Config;

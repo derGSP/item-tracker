@@ -1,34 +1,39 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
 import {
-  bigint,
+  serial,
   index,
-  mysqlTableCreator,
   timestamp,
-  varchar,
-} from "drizzle-orm/mysql-core";
+  text,
+  pgSchema,
+  real,
+} from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
-/**
- * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
- * database instance for multiple projects.
- *
- * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
- */
-export const mysqlTable = mysqlTableCreator((name) => `food-track_${name}`);
+export const foodSchema = pgSchema("food");
 
-export const posts = mysqlTable(
-  "post",
+export const posts = foodSchema.table(
+  "posts",
   {
-    id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
-    name: varchar("name", { length: 256 }),
+    id: serial("id").primaryKey(),
+    name: text("full_name"),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
-    updatedAt: timestamp("updatedAt").onUpdateNow(),
+    updatedAt: timestamp("updatedAt"),
   },
   (example) => ({
     nameIndex: index("name_idx").on(example.name),
-  })
+  }),
 );
+
+export const foodConsumption = foodSchema.table("food_consumption", {
+  id: serial("id").primaryKey(),
+  foodItem: text("item"),
+  amount: real("amount"),
+  time: timestamp("time"),
+  createdAt: timestamp("created_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
