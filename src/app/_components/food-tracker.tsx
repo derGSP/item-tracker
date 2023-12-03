@@ -7,7 +7,7 @@ import { api } from "~/trpc/react";
 
 import { z } from "zod";
 
-type PresetEntry = {
+type Preset = {
   amount: number;
   name?: string;
   isDefault?: boolean;
@@ -15,12 +15,11 @@ type PresetEntry = {
 
 export function TrackFood(props: {
   foodName: string;
-  amountPresets?: (PresetEntry | number)[];
+  amountPresets?: (Preset | number)[];
   allowCustomAmounts?: boolean;
   unit?: string;
 }) {
   const router = useRouter();
-  const [amount, setAmount] = useState(500);
 
   const { foodName, amountPresets = [], allowCustomAmounts = true } = props;
 
@@ -31,12 +30,20 @@ export function TrackFood(props: {
     return preset;
   });
 
+  const defaultPreset = presets.find((preset) => preset.isDefault) ?? null;
+  const defaultPresetId = defaultPreset ? presets.indexOf(defaultPreset) : -1;
+
+  const [amount, setAmount] = useState(defaultPreset?.amount);
+  const [selectedPreset, setSelectedPreset] = useState<number>(defaultPresetId);
+
   const logConsumption = api.food.create.useMutation({
     onSuccess: () => {
       router.refresh();
-      setAmount(500);
+      setAmount(defaultPreset?.amount);
+      setSelectedPreset(defaultPresetId);
     },
   });
+
   const consumptionQuery = api.food.getYtd.useQuery(
     { foodName },
     {
@@ -76,12 +83,14 @@ export function TrackFood(props: {
                 value={preset.amount}
                 id={`presetRadio${i}`}
                 name="amount"
-                onChange={() => setAmount(preset.amount)}
-                defaultChecked={preset.isDefault}
+                onChange={() => {
+                  setAmount(preset.amount);
+                  setSelectedPreset(i);
+                }}
+                checked={selectedPreset === i}
                 className=""
               />
               <label htmlFor={`presetRadio${i}`}>
-                {" "}
                 {preset.name ?? preset.amount}
               </label>
             </div>
@@ -90,10 +99,10 @@ export function TrackFood(props: {
             <input
               type="number"
               placeholder="Custom Amount"
-              // value={amount}
-              onChange={(e) =>
-                setAmount(z.coerce.number().parse(e.target.value))
-              }
+              onChange={(e) => {
+                setAmount(z.coerce.number().parse(e.target.value));
+                setSelectedPreset(-1); // Clear the selected preset when custom amount changes
+              }}
               className="w-full rounded-full px-4 py-2 text-black"
             />
           )}
