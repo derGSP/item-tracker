@@ -9,8 +9,8 @@ export function ItemConsumptionPanel(props: ItemProps) {
     { item, verb },
     {
       refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
+      refetchOnWindowFocus: true,
+      refetchOnReconnect: true,
     },
   );
   return (
