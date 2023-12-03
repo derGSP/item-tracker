@@ -1,5 +1,6 @@
 {
-  "name": "consumption-tracker",
+  "name": "item-tracker",
+  "description": "Minimal web utility for tracking consumption/usage/production of various things. Writes to external DB.",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -49,5 +50,6 @@
   "ct3aMetadata": {
     "initVersion": "7.24.0"
   },
-  "packageManager": "pnpm@8.6.0"
+  "packageManager": "pnpm@8.6.0",
+  "license": "AGPL-3.0-or-later"
 }
