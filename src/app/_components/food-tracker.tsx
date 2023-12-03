@@ -7,19 +7,9 @@ import { api } from "~/trpc/react";
 
 import { z } from "zod";
 import { foodConsumtionSchema } from "~/types";
+import type { FoodProps } from "./food-panel";
 
-type Preset = {
-  amount: number;
-  name?: string;
-  isDefault?: boolean;
-};
-
-export function TrackFood(props: {
-  item: string;
-  amountPresets?: (Preset | number)[];
-  allowCustomAmounts?: boolean;
-  unit?: string;
-}) {
+export function FoodTracker(props: FoodProps) {
   const router = useRouter();
 
   const { item: item, amountPresets = [], allowCustomAmounts = true } = props;
@@ -45,30 +35,8 @@ export function TrackFood(props: {
     },
   });
 
-  const consumptionQuery = api.food.getYtd.useQuery(
-    { item },
-    {
-      refetchOnMount: true,
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-    },
-  );
-
-  const ConsumptionStatus = () => {
-    return (
-      <p className="text-2xl text-white">
-        You have consumed{" "}
-        {consumptionQuery.data
-          ? `${consumptionQuery.data}${props.unit}`
-          : "quite some"}{" "}
-        {item} so far this year.
-      </p>
-    );
-  };
-
   return (
     <>
-      <ConsumptionStatus />
       <form
         onSubmit={(e) => {
           e.preventDefault();

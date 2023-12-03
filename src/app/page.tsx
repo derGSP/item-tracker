@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { TrackFood } from "./_components/food-tracker";
+import { FoodPanel } from "./_components/food-panel";
 
 export default async function Home() {
   // const hello = await api.post.hello.query({ text: "from tRPC" });
@@ -36,7 +36,7 @@ export default async function Home() {
           </Link>
         </div>
 
-        <TrackFood
+        <FoodPanel
           item="Pasta"
           amountPresets={[{ amount: 500, isDefault: true }, 1000]}
           unit="g"
