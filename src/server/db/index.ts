@@ -7,4 +7,4 @@ import * as schema from "./schema";
 const client = postgres(env.DATABASE_URL, { prepare: false });
 export const db = drizzle(client, { schema });
 
-await migrate(db, { migrationsFolder: "./migrations" });
+await migrate(db, { migrationsFolder: "drizzle" });
