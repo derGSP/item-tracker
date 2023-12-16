@@ -1,12 +1,16 @@
 import { and, eq, gte, sum } from "drizzle-orm";
 import { z } from "zod";
 
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { itemConsumption } from "~/server/db/schema";
 import { itemConsumtionSchema } from "~/types";
 
 export const itemRouter = createTRPCRouter({
-  create: publicProcedure
+  create: protectedProcedure
     .input(itemConsumtionSchema)
     .mutation(async ({ ctx, input }) => {
       // simulate a slow db call
