@@ -14,7 +14,7 @@ export function ItemConsumptionPanel(props: ItemProps) {
     },
   );
   return (
-    <p className="text-2xl text-white">
+    <p className="text-xl text-gray-900 dark:text-white">
       You have {verb ?? "used"}{" "}
       {consumptionQuery.data
         ? `${consumptionQuery.data}${unit ?? ""}`
