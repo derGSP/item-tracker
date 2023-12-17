@@ -6,7 +6,7 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 import { z } from "zod";
-import { itemConsumtionSchema } from "~/types";
+import { itemConsumtionSchema } from "~/types/itemConsumption";
 import type { ItemProps } from "./item-panel";
 
 export function ItemTracker(props: ItemProps) {

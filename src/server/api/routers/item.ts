@@ -7,7 +7,7 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 import { itemConsumption } from "~/server/db/schema";
-import { itemConsumtionSchema } from "~/types";
+import { itemConsumtionSchema } from "~/types/itemConsumption";
 
 export const itemRouter = createTRPCRouter({
   create: roleProtectedProcedure("ADMIN")
