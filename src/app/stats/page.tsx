@@ -1,13 +1,11 @@
-import { HeroLink } from "./_components/hero-link";
-import { ItemPanel } from "./_components/item-panel";
-import { SignIn } from "./_components/sign-in";
+import { ItemPanel } from "../_components/item-panel";
 
 export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
-          Tracking{" "}
+          Statistics{" "}
           <span
             className="underline decoration-dotted"
             title='colloq. a general "thing" in German'
@@ -32,8 +30,6 @@ export default async function Home() {
           verb="eaten"
           amountPresets={[{ amount: 4, isDefault: true }, 1, 6]}
         />
-        <HeroLink href="/stats" text="View detailed statistics"></HeroLink>
-        <SignIn />
       </div>
     </main>
   );
