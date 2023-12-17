@@ -1,5 +1,6 @@
 import { ItemConsumptionPanel } from "./item-stat-total";
 import { ItemTracker } from "./item-tracker";
+import { getServerAuthSession } from "~/server/auth";
 
 type Preset = {
   amount: number;
@@ -15,11 +16,12 @@ export type ItemProps = {
   unit?: string;
 };
 
-export function ItemPanel(props: ItemProps) {
+export async function ItemPanel(props: ItemProps) {
+  const session = await getServerAuthSession();
   return (
     <>
       <ItemConsumptionPanel {...props}></ItemConsumptionPanel>
-      <ItemTracker {...props}></ItemTracker>
+      {session?.user.role === "ADMIN" && <ItemTracker {...props}></ItemTracker>}
     </>
   );
 }

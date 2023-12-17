@@ -4,6 +4,7 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import type { JWT } from "next-auth/jwt";
 
 import { env } from "~/env";
 
@@ -18,7 +19,7 @@ declare module "next-auth" {
     user: {
       id: string;
       // ...other properties
-      // role: UserRole;
+      role: Role;
     } & DefaultSession["user"];
   }
 
@@ -35,12 +36,18 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session }) => ({
+    session: ({ session, token }) => ({
       ...session,
       user: {
         ...session.user,
+        id: token.sub,
+        role: token.role,
       },
     }),
+    jwt: ({ token }) => {
+      token.role = getRole(token);
+      return token;
+    },
   },
   providers: [
     GoogleProvider({
@@ -57,6 +64,18 @@ export const authOptions: NextAuthOptions = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+};
+
+export type Role = "ADMIN" | "GUEST" | null;
+
+const getRole = (token: JWT): Role => {
+  if (!token.email) {
+    return null;
+  }
+  if (env.ADMINS.includes(token.email)) {
+    return "ADMIN";
+  }
+  return "GUEST";
 };
 
 /**

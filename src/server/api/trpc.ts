@@ -11,7 +11,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 
-import { getServerAuthSession } from "~/server/auth";
+import { getServerAuthSession, type Role } from "~/server/auth";
 import { db } from "~/server/db";
 
 /**
@@ -93,6 +93,23 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
+const enforceUserRole = (role: Role) => {
+  return t.middleware(({ ctx, next }) => {
+    if (!ctx.session || !ctx.session.user || !ctx.session.user.role) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    if (ctx.session.user.role !== "ADMIN" && ctx.session.user.role !== role) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+    return next({
+      ctx: {
+        // infers the `session` as non-nullable
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
+  });
+};
+
 /**
  * Protected (authenticated) procedure
  *
@@ -102,3 +119,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+export const roleProtectedProcedure = (role: Role) =>
+  t.procedure.use(enforceUserRole(role));
