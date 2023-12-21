@@ -47,7 +47,8 @@ export function ItemTracker(props: ItemProps) {
           e.preventDefault();
           logConsumption.mutate(
             itemConsumtionSchema.parse({
-              item: `${item} ${verb ?? ""}`.trim(),
+              item,
+              verb,
               amount,
             }),
           );

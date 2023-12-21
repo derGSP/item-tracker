@@ -17,7 +17,7 @@ export const itemRouter = createTRPCRouter({
       await ctx.db.insert(itemConsumption).values({
         amount: input.amount,
         time: input.time,
-        item: input.item,
+        item: `${input.item} ${input.verb ?? ""}`.trim(),
       });
     }),
 
