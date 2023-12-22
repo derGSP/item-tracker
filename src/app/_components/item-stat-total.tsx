@@ -2,11 +2,14 @@
 
 import { api } from "~/trpc/react";
 import type { ItemProps } from "./item-panel";
+import { items } from "~/types/itemConsumption";
 
 export function ItemConsumptionPanel(props: ItemProps) {
-  const { item, unit, verb } = props;
+  const { itemId } = props;
+  const item = items[itemId];
+
   const consumptionQuery = api.item.getYtd.useQuery(
-    { item, verb },
+    { item: item.name, verb: item.verb },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
@@ -15,11 +18,11 @@ export function ItemConsumptionPanel(props: ItemProps) {
   );
   return (
     <p className="text-xl text-gray-900 dark:text-white">
-      I have {verb ?? "used"}{" "}
+      I have {item.verb ?? "used"}{" "}
       {consumptionQuery.data
-        ? `${consumptionQuery.data}${unit ?? ""}`
+        ? `${item.formatter.format(consumptionQuery.data)}`
         : "quite some"}{" "}
-      {item} so far this year.
+      {item.name} so far this year.
     </p>
   );
 }

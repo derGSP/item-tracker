@@ -2,7 +2,7 @@ import { HeroLink } from "./_components/hero-link";
 import { ItemPanel } from "./_components/item-panel";
 import { SignIn } from "./_components/sign-in";
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900">
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
@@ -17,22 +17,18 @@ export default async function Home() {
         </h1>
 
         <ItemPanel
-          item="Pasta"
-          verb="eaten"
-          amountPresets={[{ amount: 500, isDefault: true }, 1000]}
-          unit="g"
+          itemId="pasta"
+          amountPresets={[{ amount: 0.5, isDefault: true }, 1]}
         />
         <ItemPanel
-          item="Pizzas"
-          verb="baked"
+          itemId="pizzaBaked"
           amountPresets={[{ amount: 4, isDefault: true }, 1, 6]}
         />
         <ItemPanel
-          item="Pizzas"
-          verb="eaten"
+          itemId="pizzaEaten"
           amountPresets={[{ amount: 4, isDefault: true }, 1, 6]}
         />
-        <HeroLink href="/stats" text="View detailed statistics"></HeroLink>
+        <HeroLink href="/stats" text="Stats & FAQ"></HeroLink>
         <SignIn />
       </div>
     </main>

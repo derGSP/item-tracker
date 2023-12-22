@@ -6,18 +6,14 @@ import { useState } from "react";
 import { api } from "~/trpc/react";
 
 import { z } from "zod";
-import { itemConsumtionSchema } from "~/types/itemConsumption";
+import { itemConsumtionSchema, items } from "~/types/itemConsumption";
 import type { ItemProps } from "./item-panel";
 
 export function ItemTracker(props: ItemProps) {
   const router = useRouter();
 
-  const {
-    item: item,
-    amountPresets = [],
-    allowCustomAmounts = true,
-    verb,
-  } = props;
+  const { itemId, amountPresets = [], allowCustomAmounts = true } = props;
+  const item = items[itemId];
 
   const presets = amountPresets.map((preset) => {
     if (typeof preset === "number") {
@@ -47,8 +43,8 @@ export function ItemTracker(props: ItemProps) {
           e.preventDefault();
           logConsumption.mutate(
             itemConsumtionSchema.parse({
-              item,
-              verb,
+              item: item.name,
+              verb: item.verb,
               amount,
             }),
           );
@@ -76,7 +72,7 @@ export function ItemTracker(props: ItemProps) {
               >
                 <div className="block">
                   <div className="w-full text-lg font-semibold">
-                    {preset.name ?? preset.amount + (props.unit ?? "")}
+                    {preset.name ?? item.formatter.format(preset.amount)}
                   </div>
                 </div>
               </label>

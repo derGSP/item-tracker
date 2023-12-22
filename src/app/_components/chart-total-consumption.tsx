@@ -3,10 +3,14 @@ import { type ApexOptions } from "apexcharts";
 import ApexChart from "react-apexcharts";
 
 import { api } from "~/trpc/react";
+import { type ItemKey, items } from "~/types/itemConsumption";
+import { dateFormat } from "~/utils/formatters";
 
-export function Chart() {
+export function TotalConsumptionChart(props: { itemId: ItemKey }) {
+  const { itemId } = props;
+  const item = items[itemId];
   const consumptionQuery = api.item.getHistory.useQuery(
-    { item: "Pasta", verb: "eaten" },
+    { item: item.name, verb: item.verb },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
@@ -14,10 +18,12 @@ export function Chart() {
     },
   );
 
+  const currentTotal = consumptionQuery.data?.at(-1)?.cum_amt;
+
   // ApexCharts options and config
   const series = [
     {
-      name: "Pasta eaten",
+      name: `${item.name} ${item.verb ?? "used"}`,
       data: consumptionQuery.data?.map((item) => item.cum_amt) ?? [],
       color: "#1A56DB",
     },
@@ -41,7 +47,7 @@ export function Chart() {
         show: false,
       },
       y: {
-        formatter: (value) => value + "g",
+        formatter: (val) => item.formatter.format(val),
       },
     },
     fill: {
@@ -69,9 +75,8 @@ export function Chart() {
     },
     xaxis: {
       categories:
-        consumptionQuery.data?.map((item) =>
-          Intl.DateTimeFormat().format(item.time),
-        ) ?? [],
+        consumptionQuery.data?.map((item) => dateFormat.format(item.time)) ??
+        [],
       labels: {
         show: false,
       },
@@ -85,7 +90,7 @@ export function Chart() {
     yaxis: {
       show: true,
       labels: {
-        formatter: (value) => value / 1000 + "kg",
+        formatter: (val) => item.formatter.format(val),
         style: {
           colors: "#6B7280",
           fontSize: "14px",
@@ -101,10 +106,10 @@ export function Chart() {
       <div className="flex justify-between">
         <div>
           <span className="pb-2 text-3xl font-bold leading-none text-gray-900 dark:text-white">
-            {consumptionQuery.data?.at(-1)?.cum_amt + "g" ?? "A lot of"}
+            {currentTotal ? item.formatter.format(currentTotal) : "A lot of"}
           </span>
           <p className="text-base font-normal text-gray-500 dark:text-gray-400">
-            Pasta this year
+            {item.name} this year
           </p>
         </div>
       </div>

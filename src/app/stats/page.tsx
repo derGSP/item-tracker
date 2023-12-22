@@ -1,4 +1,7 @@
-import { Chart } from "~/app/_components/chart";
+import { TotalConsumptionChart } from "~/app/_components/chart-total-consumption";
+import { FAQ } from "../_components/faq";
+import { DayOfWeekChart } from "../_components/chart-dow";
+import { MonthChart } from "../_components/chart-month";
 
 export default function Home() {
   return (
@@ -10,12 +13,12 @@ export default function Home() {
             <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
               {/* Main Panel */}
               <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 2xl:col-span-2">
-                <Chart />
+                <TotalConsumptionChart itemId="pasta" />
               </div>
               {/* Secondary Panel */}
               <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
                 <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  This is still under heavy development
+                  What is this?
                 </h3>
                 <p className="mb-3 text-gray-500 dark:text-gray-400">
                   I decided to embark on a fun project where I track my daily
@@ -41,25 +44,15 @@ export default function Home() {
               </div>
               {/* Main Panel */}
               <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Sum per weekday
-                </h3>
+                <DayOfWeekChart itemId="pasta" />
               </div>
               {/* Secondary Panel */}
               <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <h3 className="mb-4 flex items-center text-lg font-semibold text-gray-900 dark:text-white">
-                  Sum per Month
-                </h3>
+                <MonthChart itemId="pasta" />
               </div>
               {/* Tertiary Panel */}
               <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <a
-                  href="https://github.com/GerritPlehn/item-tracker"
-                  rel="noopener"
-                  className="rounded-lg bg-blue-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Follow along on GitHub
-                </a>
+                <FAQ />
               </div>
             </div>
           </div>

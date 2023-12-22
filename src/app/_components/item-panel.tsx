@@ -1,3 +1,4 @@
+import type { ItemKey } from "~/types/itemConsumption";
 import { ItemConsumptionPanel } from "./item-stat-total";
 import { ItemTracker } from "./item-tracker";
 import { getServerAuthSession } from "~/server/auth";
@@ -9,11 +10,9 @@ type Preset = {
 };
 
 export type ItemProps = {
-  item: string;
+  itemId: ItemKey;
   amountPresets?: (Preset | number)[];
-  verb?: string;
   allowCustomAmounts?: boolean;
-  unit?: string;
 };
 
 export async function ItemPanel(props: ItemProps) {
