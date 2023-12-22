@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { kgFormat } from "~/utils/formatters";
 
-export const itemSchema = z.enum(["Pasta", "Pizza"]);
+export const itemSchema = z.enum(["Pasta", "Pizzas"]);
 export type ItemName = z.infer<typeof itemSchema>;
 
 export const itemConsumtionSchema = z.object({
@@ -26,13 +26,13 @@ export const pasta: Item = {
 };
 export const pizzaEaten: Item = {
   id: "pizzaEaten",
-  name: "Pizza",
+  name: "Pizzas",
   verb: "eaten",
   formatter: new Intl.NumberFormat(),
 };
 export const pizzaBaked: Item = {
   id: "pizzaBaked",
-  name: "Pizza",
+  name: "Pizzas",
   verb: "baked",
   formatter: new Intl.NumberFormat(),
 };
