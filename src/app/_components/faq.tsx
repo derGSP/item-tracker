@@ -14,6 +14,13 @@ export function FAQ() {
         No. I only eat what I would have eaten anyways.
       </p>
       <p className="font-bold text-gray-900 dark:text-white">
+        What dish do you eat most?
+      </p>
+      <p className="mb-2 text-base text-gray-900 dark:text-white">
+        Penne all’arrabbiata. It's probably more than 90% of my pasta
+        consumption.
+      </p>
+      <p className="font-bold text-gray-900 dark:text-white">
         How are you measuring?
       </p>
       <p className="mb-2 text-base text-gray-900 dark:text-white">
@@ -26,6 +33,11 @@ export function FAQ() {
       <p className="mb-2 text-base text-gray-900 dark:text-white">Nope.</p>
       <p className="font-bold text-gray-900 dark:text-white">Lots of Sports?</p>
       <p className="mb-2 text-base text-gray-900 dark:text-white">Nope.</p>
+      <p className="font-bold text-gray-900 dark:text-white">
+        Is the number cooked or dried pasta?
+      </p>
+      <p className="mb-2 text-base text-gray-900 dark:text-white">Dried.</p>
+
       <p className="font-bold text-gray-900 dark:text-white">Open Source?</p>
       <p className="mb-2 text-base text-gray-900 dark:text-white">Of course.</p>
       <a
