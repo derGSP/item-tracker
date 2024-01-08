@@ -16,6 +16,7 @@ export type Item = {
   name: ItemName;
   verb?: string;
   formatter: Intl.NumberFormat;
+  step?: number;
 };
 
 export const pasta: Item = {
@@ -23,6 +24,7 @@ export const pasta: Item = {
   name: "Pasta",
   verb: "eaten",
   formatter: kgFormat,
+  step: 0.01,
 };
 export const pizzaEaten: Item = {
   id: "pizzaEaten",

@@ -82,6 +82,7 @@ export function ItemTracker(props: ItemProps) {
             <input
               type="number"
               placeholder="Custom Amount"
+              step={item.step}
               onChange={(e) => {
                 setAmount(z.coerce.number().parse(e.target.value));
                 setSelectedPreset(-1); // Clear the selected preset when custom amount changes
