@@ -26,6 +26,7 @@ export function MonthChart(props: { itemId: ItemKey }) {
       color: "#1A56DB",
     },
   ];
+  const chartHeight = 600;
 
   const options: ApexOptions = {
     chart: {
@@ -34,7 +35,7 @@ export function MonthChart(props: { itemId: ItemKey }) {
       },
       type: "bar",
       width: "100%",
-      height: 400,
+      height: chartHeight,
       toolbar: {
         show: false,
       },
@@ -118,7 +119,7 @@ export function MonthChart(props: { itemId: ItemKey }) {
   };
 
   return (
-    <div style={{ minHeight: 450 }}>
+    <div style={{ minHeight: chartHeight }}>
       <div className="flex justify-between">
         <div>
           <span className="pb-2 text-3xl font-bold leading-none text-gray-900 dark:text-white">
@@ -126,7 +127,12 @@ export function MonthChart(props: { itemId: ItemKey }) {
           </span>
         </div>
       </div>
-      <ApexChart type="bar" series={series} options={options} height={450} />
+      <ApexChart
+        type="bar"
+        series={series}
+        options={options}
+        height={chartHeight}
+      />
     </div>
   );
 }
