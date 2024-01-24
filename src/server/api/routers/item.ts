@@ -64,16 +64,25 @@ export const itemRouter = createTRPCRouter({
               CURRENT_DATE,
               '1 day'::interval
             ) AS date
+        ),
+        consumption AS (
+          SELECT
+            item,
+            time,
+            amount
+          FROM
+            item_consumption.item_consumption c
+          WHERE
+            item = ${getDbName(input.item, input.verb)}
+            AND time > ${input.since ?? firstDayOfYear}::date
         )
       SELECT
-        dates.date as time,
-            COALESCE(sum(item_consumption.amount), 0) as amount,
-            COALESCE(sum(sum(item_consumption.amount)) over (partition by item_consumption.item order by dates.date), 0) as cum_amt
+        dates.date AS time,
+            COALESCE(sum(c.amount), 0) AS amount,
+            COALESCE(sum(sum(c.amount)) over (partition by 1 order by dates.date), 0) AS cum_amt
       FROM
         dates
-        LEFT JOIN item_consumption.item_consumption ON date (item_consumption.time) = dates.date
-      WHERE
-        item_consumption.item = ${getDbName(input.item, input.verb)}
+        LEFT JOIN consumption c ON date (c.time) = dates.date
       GROUP BY
         item, dates.date
       ORDER BY
