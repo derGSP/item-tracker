@@ -6,10 +6,10 @@ import { Recipe } from "../_components/recipe";
 
 export default function Home() {
   return (
-    <div className="flex overflow-hidden bg-gray-50 pt-16 dark:bg-gray-900">
+    <div className="flex overflow-hidden bg-gray-50 py-32 dark:bg-gray-900">
       <main className="relative mx-auto h-full min-h-screen w-full max-w-screen-2xl overflow-y-auto bg-gray-50 dark:bg-gray-900">
-        <div className="px-4 pt-6 2xl:px-0">
-          <div className="px-4 pt-6">
+        <div className="px-4 2xl:px-0">
+          <div className="px-4">
             {/* First Row */}
             <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
               {/* Main Panel */}
