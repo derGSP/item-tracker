@@ -6,7 +6,7 @@ import { Recipe } from "../_components/recipe";
 
 export default function Home() {
   return (
-    <div className="flex overflow-hidden bg-gray-50 py-32 dark:bg-gray-900">
+    <div className="flex overflow-hidden bg-gray-50 py-16 dark:bg-gray-900">
       <main className="relative mx-auto h-full min-h-screen w-full max-w-screen-2xl overflow-y-auto bg-gray-50 dark:bg-gray-900">
         <div className="px-4 2xl:px-0">
           <div className="px-4">
