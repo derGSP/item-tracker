@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getServerAuthSession } from "~/server/auth";
+import { useSession } from "next-auth/react";
 
-export async function SignIn() {
-  const session = await getServerAuthSession();
+export function SignIn() {
+  const { data: session } = useSession();
   return (
     <div className="flex flex-col items-center justify-center">
       <Link
