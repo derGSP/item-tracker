@@ -10,11 +10,12 @@ import {
   real,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
+import { env } from "~/env";
 
 export const itemSchema = pgSchema("item_consumption");
 
 export const itemConsumption = itemSchema.table(
-  "item_consumption",
+  `item_consumption${env.NODE_ENV !== "production" ? "_dev" : ""}`,
   {
     id: serial("id").primaryKey(),
     item: text("item"),
