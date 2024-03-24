@@ -6,11 +6,15 @@ import { api } from "~/trpc/react";
 import { type ItemKey, items } from "~/types/itemConsumption";
 import { dateFormat } from "~/utils/formatters";
 
-export function TotalConsumptionChart(props: { itemId: ItemKey }) {
-  const { itemId } = props;
+export function TotalConsumptionChart(props: {
+  itemId: ItemKey;
+  from: Date;
+  to: Date;
+}) {
+  const { itemId, from, to } = props;
   const item = items[itemId];
   const consumptionQuery = api.item.getHistory.useQuery(
-    { item: item.name, verb: item.verb },
+    { item: item.name, verb: item.verb, from, to },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
