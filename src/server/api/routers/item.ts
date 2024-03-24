@@ -1,4 +1,4 @@
-import { and, eq, gte, sum, sql } from "drizzle-orm";
+import { and, eq, gte, sum, sql, lt } from "drizzle-orm";
 import { z } from "zod";
 
 import {
@@ -28,9 +28,15 @@ export const itemRouter = createTRPCRouter({
         item: getDbName(input.item, input.verb),
       });
     }),
-
-  getYtd: publicProcedure
-    .input(z.object({ item: z.string(), verb: z.string().optional() }))
+  getPeriod: publicProcedure
+    .input(
+      z.object({
+        item: z.string(),
+        verb: z.string().optional(),
+        from: z.date().default(firstDayOfYear),
+        to: z.date().default(new Date()),
+      }),
+    )
     .query(async ({ ctx, input }) => {
       const query = await ctx.db
         .select({
@@ -40,7 +46,8 @@ export const itemRouter = createTRPCRouter({
         .where(
           and(
             eq(itemConsumption.item, getDbName(input.item, input.verb)),
-            gte(itemConsumption.time, firstDayOfYear),
+            gte(itemConsumption.time, input.from),
+            lt(itemConsumption.time, input.to),
           ),
         );
 
@@ -51,7 +58,8 @@ export const itemRouter = createTRPCRouter({
       z.object({
         item: itemSchema,
         verb: z.string().optional(),
-        since: z.date().optional(),
+        from: z.date().default(firstDayOfYear),
+        to: z.date().default(new Date()),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -60,8 +68,8 @@ export const itemRouter = createTRPCRouter({
         dates AS (
           SELECT
             generate_series(
-              ${input.since ?? firstDayOfYear}::date,
-              CURRENT_DATE,
+              ${input.from}::date,
+              ${input.to}::date,
               '1 day'::interval
             ) AS date
         ),
@@ -74,7 +82,8 @@ export const itemRouter = createTRPCRouter({
             item_consumption.item_consumption c
           WHERE
             item = ${getDbName(input.item, input.verb)}
-            AND time > ${input.since ?? firstDayOfYear}::date
+            AND time > ${input.from}::date
+            AND time < ${input.to}::date
         )
       SELECT
         dates.date AS time,
@@ -105,7 +114,8 @@ export const itemRouter = createTRPCRouter({
       z.object({
         item: itemSchema,
         verb: z.string().optional(),
-        since: z.date().optional(),
+        from: z.date().default(firstDayOfYear),
+        to: z.date().default(new Date()),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -121,7 +131,8 @@ export const itemRouter = createTRPCRouter({
         item_consumption.item_consumption
       where
         item = ${getDbName(input.item, input.verb)}
-        and time >= ${input.since ?? firstDayOfYear}
+        and time >= ${input.from}
+        and time < ${input.to}
       group by
         day_of_week
       order by
@@ -144,7 +155,8 @@ export const itemRouter = createTRPCRouter({
       z.object({
         item: itemSchema,
         verb: z.string().optional(),
-        since: z.date().optional(),
+        from: z.date().default(firstDayOfYear),
+        to: z.date().default(new Date()),
       }),
     )
     .query(async ({ ctx, input }) => {
@@ -160,7 +172,8 @@ export const itemRouter = createTRPCRouter({
         item_consumption.item_consumption
       where
         item = ${getDbName(input.item, input.verb)}
-        and time >= ${input.since ?? firstDayOfYear}
+        and time >= ${input.from}
+        and time < ${input.to}
       group by
         month
       order by

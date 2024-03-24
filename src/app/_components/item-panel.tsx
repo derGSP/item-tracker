@@ -23,7 +23,7 @@ export function ItemPanel(props: ItemProps) {
   const { itemId, amountPresets = [], allowCustomAmounts = true } = props;
   const item = items[itemId];
 
-  const consumptionQuery = api.item.getYtd.useQuery(
+  const consumptionQuery = api.item.getPeriod.useQuery(
     { item: item.name, verb: item.verb },
     {
       refetchOnMount: true,

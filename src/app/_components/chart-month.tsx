@@ -5,12 +5,12 @@ import ApexChart from "react-apexcharts";
 import { api } from "~/trpc/react";
 import { type ItemKey, items } from "~/types/itemConsumption";
 
-export function MonthChart(props: { itemId: ItemKey }) {
-  const { itemId } = props;
+export function MonthChart(props: { itemId: ItemKey; from: Date; to: Date }) {
+  const { itemId, from, to } = props;
   const item = items[itemId];
 
   const consumptionQuery = api.item.getMonthTotals.useQuery(
-    { item: item.name, verb: item.verb },
+    { item: item.name, verb: item.verb, from, to },
     {
       refetchOnMount: true,
       refetchOnWindowFocus: true,
