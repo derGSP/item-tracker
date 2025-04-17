@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { kgFormat } from "~/utils/formatters";
 
-export const itemSchema = z.enum(["Pasta", "Pizzas"]);
+export const itemSchema = z.enum(["Brötchen", "Pizzen"]);
 export type ItemName = z.infer<typeof itemSchema>;
 
 export const itemConsumtionSchema = z.object({
-  item: itemSchema.default("Pasta"),
+  item: itemSchema.default("Brötchen"),
   verb: z.string().optional(),
   amount: z.number().default(500),
   time: z.date().default(new Date()),
@@ -19,30 +19,22 @@ export type Item = {
   step?: number;
 };
 
-export const pasta: Item = {
-  id: "pasta",
-  name: "Pasta",
-  verb: "eaten",
-  formatter: kgFormat,
-  step: 0.01,
-};
-export const pizzaEaten: Item = {
-  id: "pizzaEaten",
-  name: "Pizzas",
-  verb: "eaten",
+export const broetchen: Item = {
+  id: "broetchen",
+  name: "Brötchen",
+  verb: "gegessen",
   formatter: new Intl.NumberFormat(),
 };
-export const pizzaBaked: Item = {
-  id: "pizzaBaked",
-  name: "Pizzas",
-  verb: "baked",
+export const pizza: Item = {
+  id: "pizza",
+  name: "Pizzen",
+  verb: "gegessen",
   formatter: new Intl.NumberFormat(),
 };
 
 export const items = {
-  pasta,
-  pizzaEaten,
-  pizzaBaked,
+  broetchen,
+  pizza,
 } as const;
 
 export type ItemKey = keyof typeof items;

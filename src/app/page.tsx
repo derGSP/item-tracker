@@ -20,15 +20,11 @@ export default function Home() {
           </h1>
 
           <ItemPanel
-            itemId="pasta"
+            itemId="broetchen"
             amountPresets={[{ amount: 0.5, isDefault: true }, 1]}
           />
           <ItemPanel
-            itemId="pizzaBaked"
-            amountPresets={[{ amount: 4, isDefault: true }, 1, 6]}
-          />
-          <ItemPanel
-            itemId="pizzaEaten"
+            itemId="pizza"
             amountPresets={[{ amount: 4, isDefault: true }, 1, 6]}
           />
           <HeroLink href="/stats" text="Stats & FAQ"></HeroLink>
