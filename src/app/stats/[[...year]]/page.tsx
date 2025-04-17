@@ -33,27 +33,19 @@ export default function Home({ params }: { params: { year: string } }) {
             {/* First Row */}
             <div className="grid gap-4 xl:grid-cols-2 2xl:grid-cols-3">
               {/* Main Panel */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 2xl:col-span-2">
+              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 2xl:col-span-3">
                 <TotalConsumptionChart
-                  itemId="pasta"
+                  itemId="broetchen"
                   from={startDate}
                   to={endDate}
                 />
               </div>
-              {/* Secondary Panel */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <DayOfWeekChart itemId="pasta" from={startDate} to={endDate} />
-              </div>
-              {/* Secondary Panel */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <MonthChart itemId="pasta" from={startDate} to={endDate} />
-              </div>
-              {/* Tertiary Panel */}
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <FAQ />
-              </div>
-              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-                <Recipe />
+              <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6 2xl:col-span-3">
+                <TotalConsumptionChart
+                  itemId="pizza"
+                  from={startDate}
+                  to={endDate}
+                />
               </div>
             </div>
           </div>
