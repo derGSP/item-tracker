@@ -1,8 +1,4 @@
 import { TotalConsumptionChart } from "~/app/_components/chart-total-consumption";
-import { FAQ } from "../../_components/faq";
-import { DayOfWeekChart } from "../../_components/chart-dow";
-import { MonthChart } from "../../_components/chart-month";
-import { Recipe } from "../../_components/recipe";
 import { z } from "zod";
 
 export default function Home({ params }: { params: { year: string } }) {

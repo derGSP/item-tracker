@@ -11,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "GP Item Tracker",
+  title: "Brötchen & Pizza Tracker",
   description: "Track item usage/production with a single click.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };

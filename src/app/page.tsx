@@ -27,7 +27,7 @@ export default function Home() {
             itemId="pizza"
             amountPresets={[{ amount: 1, isDefault: true }]}
           />
-          <HeroLink href="/stats" text="Stats & FAQ"></HeroLink>
+          <HeroLink href="/stats" text="Stats"></HeroLink>
           <SignIn />
         </div>
       </main>
