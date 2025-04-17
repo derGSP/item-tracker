@@ -21,7 +21,6 @@ export const itemRouter = createTRPCRouter({
   create: roleProtectedProcedure("ADMIN")
     .input(itemConsumtionSchema)
     .mutation(async ({ ctx, input }) => {
-      // simulate a slow db call
       await ctx.db.insert(itemConsumption).values({
         amount: input.amount,
         time: input.time,
@@ -83,7 +82,7 @@ export const itemRouter = createTRPCRouter({
           WHERE
             item = ${getDbName(input.item, input.verb)}
             AND time > ${input.from}::date
-            AND time < ${input.to}::date
+            AND time <= ${input.to}::date
         )
       SELECT
         dates.date AS time,
